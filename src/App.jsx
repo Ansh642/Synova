@@ -8,6 +8,7 @@ import PricingPage from './pages/Pricing';
 import UseCasesPage from './pages/UseCases';
 import AboutPage from './pages/About';
 import ContactPage from './pages/Contact';
+import DemoPage from './pages/Demo';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/demo" element={<DemoPage />} />
           </Routes>
         </main>
         

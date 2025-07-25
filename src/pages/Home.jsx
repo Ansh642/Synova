@@ -1,8 +1,24 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FiCheck, FiArrowRight, FiZap, FiMessageSquare, FiPhone } from "react-icons/fi";
+import { FiCheck, FiArrowRight, FiStar, FiZap, FiMessageSquare, FiPhone } from "react-icons/fi";
+import { useAnimation } from "framer-motion";
+import { useEffect } from "react";
 
 export default function Home() {
+
+const controls = useAnimation();
+
+useEffect(() => {
+  controls.start({
+    x: ["0%", "-100%"],
+    transition: {
+      duration: 60,
+      ease: "linear",
+      repeat: Infinity,
+    },
+  });
+}, []);
+
   return (
     <main>
       {/* Hero Section */}
@@ -165,57 +181,122 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-center mb-16"
+      <section className="py-20 bg-white overflow-hidden">
+  <div className="container mx-auto px-6">
+    <motion.h2
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      className="text-3xl md:text-4xl font-bold text-center mb-16"
+    >
+      Trusted by <span className="text-blue-600">Industry Leaders</span>
+    </motion.h2>
+
+    <div className="relative h-[300px] w-full overflow-x-visible py-4">
+      <motion.div
+        className="absolute cursor-pointer top-0 left-0 flex gap-8"
+        animate={controls}
+        onMouseEnter={() => controls.stop()}
+        onMouseLeave={() =>
+          controls.start({
+            x: ["0%", "-100%"],
+            transition: {
+              duration: 30,
+              ease: "linear",
+              repeat: Infinity,
+            },
+          })
+        }
+      >
+        {[
+          {
+            quote:
+              "Synova increased our lead conversion by 3x while reducing response time from hours to seconds.",
+            name: "Sarah Johnson",
+            title: "CMO, TechStart Inc.",
+            stars: 5,
+          },
+          {
+            quote:
+              "The AI voice agent handles 80% of our customer inquiries without human intervention.",
+            name: "Michael Chen",
+            title: "CEO, Global Solutions",
+            stars: 5,
+          },
+          {
+            quote:
+              "Best investment we've made in our sales pipeline. ROI was clear within the first month.",
+            name: "David Wilson",
+            title: "Sales Director, GrowthLabs",
+            stars: 5,
+          },
+          {
+            quote:
+              "Implementation was seamless and our sales team adopted it immediately.",
+            name: "Emily Rodriguez",
+            title: "VP Sales, NexTech",
+            stars: 4,
+          },
+          {
+            quote:
+              "The analytics dashboard gives us incredible insights into customer behavior.",
+            name: "James Peterson",
+            title: "Director of Marketing",
+            stars: 5,
+          },
+          // Duplicates
+          {
+            quote:
+              "Synova increased our lead conversion by 3x while reducing response time from hours to seconds.",
+            name: "Sarah Johnson",
+            title: "CMO, TechStart Inc.",
+            stars: 5,
+          },
+          {
+            quote:
+              "The AI voice agent handles 80% of our customer inquiries without human intervention.",
+            name: "Michael Chen",
+            title: "CEO, Global Solutions",
+            stars: 5,
+          },
+          {
+            quote:
+              "Best investment we've made in our sales pipeline. ROI was clear within the first month.",
+            name: "David Wilson",
+            title: "Sales Director, GrowthLabs",
+            stars: 5,
+          },
+        ].map((testimonial, index) => (
+          <motion.div
+            key={`${index}-${testimonial.name}`}
+            className="w-[350px] flex-shrink-0 bg-white p-8 rounded-xl border border-gray-200 hover:shadow-xl transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
           >
-            Trusted by <span className="text-blue-600">Industry Leaders</span>
-          </motion.h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                quote: "Synova increased our lead conversion by 3x while reducing response time from hours to seconds.",
-                name: "Sarah Johnson",
-                title: "CMO, TechStart Inc."
-              },
-              {
-                quote: "The AI voice agent handles 80% of our customer inquiries without human intervention.",
-                name: "Michael Chen",
-                title: "CEO, Global Solutions"
-              },
-              {
-                quote: "Best investment we've made in our sales pipeline. ROI was clear within the first month.",
-                name: "David Wilson",
-                title: "Sales Director, GrowthLabs"
-              }
-            ].map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-gray-50 p-8 rounded-xl border border-gray-200"
-              >
-                <div className="text-gray-600 mb-6">"{testimonial.quote}"</div>
-                <div className="border-t border-gray-200 pt-4">
-                  <p className="font-medium text-gray-900">{testimonial.name}</p>
-                  <p className="text-gray-600 text-sm">{testimonial.title}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+            <div className="flex gap-1 mb-4">
+              {[...Array(testimonial.stars)].map((_, i) => (
+                <FiStar
+                  key={i}
+                  className="text-yellow-400 fill-current w-4 h-4"
+                />
+              ))}
+            </div>
+            <div className="text-gray-600 mb-6 italic">
+              "{testimonial.quote}"
+            </div>
+            <div className="border-t border-gray-200 pt-4">
+              <p className="font-medium text-gray-900">{testimonial.name}</p>
+              <p className="text-gray-600 text-sm">{testimonial.title}</p>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  </div>
+</section>
 
       {/* Integration Partners */}
-      <section className="py-20 bg-gray-50">
+      {/* <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <motion.h2
             initial={{ opacity: 0 }}
@@ -242,7 +323,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Final CTA */}
       <section className="py-20 bg-gray-900">
@@ -280,7 +361,7 @@ export default function Home() {
       </Link>
     </div>
   </div>
-</section>
+      </section>
 
     </main>
   );

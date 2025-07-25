@@ -38,7 +38,7 @@ export default function Header() {
               {navItems.map((item) => (
                 <div 
                   key={item.path}
-                  className="relative h-full flex items-center"
+                  className="relative h-full cursor-pointer flex items-center"
                   onMouseEnter={() => setHoveredItem(item.path)}
                   onMouseLeave={() => setHoveredItem(null)}
                 >

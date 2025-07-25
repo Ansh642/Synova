@@ -3,7 +3,6 @@ import { useState } from "react";
 import { FiMail, FiPhone, FiMapPin, FiClock, FiSend } from "react-icons/fi";
 
 export default function Contact() {
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,7 +18,6 @@ export default function Contact() {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Clear error when typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
@@ -37,7 +35,7 @@ export default function Contact() {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
@@ -46,13 +44,39 @@ export default function Contact() {
     }
 
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      console.log("Form submitted:", formData);
+    
+    try {
+      // Send email using FormSubmit or your preferred method
+      const response = await fetch("https://formsubmit.co/ajax/sarthak4556@gmail.com", {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          _subject: "New Contact Form Submission",
+          _template: "table"
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.success === "true") {
+        setSubmitSuccess(true);
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        throw new Error("Submission failed");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setErrors({ submit: "Failed to send message. Please try again later." });
+    } finally {
       setIsSubmitting(false);
-      setSubmitSuccess(true);
-      setFormData({ name: "", email: "", phone: "", message: "" });
-    }, 1500);
+    }
   };
 
   return (
@@ -74,7 +98,7 @@ export default function Contact() {
       </section>
 
       {/* Main Content */}
-      <section className="py-20 px-6 max-w-7x mx-auto">
+      <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8">
           {/* Contact Form */}
           <motion.div
@@ -92,6 +116,12 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {errors.submit && (
+                  <div className="p-4 bg-red-50 text-red-700 rounded-lg border border-red-200">
+                    {errors.submit}
+                  </div>
+                )}
+                
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                     Full Name *
@@ -162,8 +192,20 @@ export default function Contact() {
                   disabled={isSubmitting}
                   className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-70"
                 >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                  <FiSend />
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <FiSend />
+                    </>
+                  )}
                 </button>
               </form>
             )}
@@ -186,8 +228,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900">Email</h3>
-                    <a href="mailto:hello@synova.ai" className="text-gray-600 hover:text-blue-600 transition-colors">
-                      hello@synova.ai
+                    <a href="mailto:sarthak4556@gmail.com" className="text-gray-600 hover:text-blue-600 transition-colors">
+                      sarthak4556@gmail.com
                     </a>
                   </div>
                 </div>
@@ -198,10 +240,10 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900">Phone</h3>
-                    <a href="tel:+18005551234" className="text-gray-600 hover:text-blue-600 transition-colors">
-                      +91 9876543210
+                    <a href="tel:+919876543210" className="text-gray-600 hover:text-blue-600 transition-colors">
+                      +91 93893 53108
                     </a>
-                    <p className="text-sm text-gray-500 mt-1">Mon-Fri, 9AM-6PM EST</p>
+                    <p className="text-sm text-gray-500 mt-1">Mon-Fri, 9AM-6PM IST</p>
                   </div>
                 </div>
 
@@ -210,10 +252,10 @@ export default function Contact() {
                     <FiMapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900">Headquarters</h3>
+                    <h3 className="font-medium text-gray-900">Office Location</h3>
                     <p className="text-gray-600">
-                      123 AI Boulevard<br />
-                      San Francisco, CA 94107
+                      Sector 62, Noida<br />
+                      Uttar Pradesh, India - 201301
                     </p>
                   </div>
                 </div>
@@ -223,21 +265,21 @@ export default function Contact() {
                     <FiClock className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900">Support Hours</h3>
+                    <h3 className="font-medium text-gray-900">Working Hours</h3>
                     <p className="text-gray-600">
-                      <span className="font-medium">Priority Support:</span> 24/7<br />
-                      <span className="font-medium">General Inquiries:</span> Mon-Fri, 9AM-6PM EST
+                      <span className="font-medium">Monday-Friday:</span> 9:00 AM - 6:00 PM IST<br />
+                      <span className="font-medium">Weekends:</span> Closed
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Map */}
+            {/* Map - Noida Location */}
             <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
               <iframe
-                title="Google Maps"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.102370616518!2d-122.41990648468192!3d37.77492997975921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA%2C%20USA!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin"
+                title="Google Maps - Noida Office"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.715001135722!2d77.3678573150809!3d28.5445439824525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce5a43173357b%3A0x37ffce30c87cc03f!2sNoida%2C%20Uttar%20Pradesh%20201301!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin"
                 width="100%"
                 height="300"
                 style={{ border: 0 }}
@@ -253,14 +295,17 @@ export default function Contact() {
       <section className="py-20 bg-gray-900 text-center">
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Prefer a Quick Call?
+            Need Immediate Assistance?
           </h2>
           <p className="text-xl text-blue-100 mb-8">
-            Schedule a 15-minute consultation with our AI specialists.
+            Call us directly at +91 93893 53108 for urgent inquiries.
           </p>
-          <button className="px-8 py-3 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl">
-            Book a Call
-          </button>
+          <a 
+            href="tel:+919876543210"
+            className="inline-block px-8 py-3 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
+          >
+            Call Now
+          </a>
         </div>
       </section>
     </div>
