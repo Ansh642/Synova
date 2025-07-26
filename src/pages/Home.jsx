@@ -5,27 +5,28 @@ import { useAnimation } from "framer-motion";
 import { useEffect } from "react";
 
 export default function Home() {
+  const controls = useAnimation();
 
-const controls = useAnimation();
-
-useEffect(() => {
-  controls.start({
-    x: ["0%", "-100%"],
-    transition: {
-      duration: 60,
-      ease: "linear",
-      repeat: Infinity,
-    },
-  });
-}, []);
+  useEffect(() => {
+    controls.start({
+      x: ["0%", "-100%"],
+      transition: {
+        duration: 60,
+        ease: "linear",
+        repeat: Infinity,
+      },
+    });
+  }, []);
 
   return (
-    <main>
+    <main className="bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-blue-900">
-        {/* Animated gradient dots background */}
-        <div className="absolute inset-0 overflow-hidden opacity-20">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent"></div>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-pink-50 via-yellow-50 to-blue-50">
+        {/* Color effect bubbles */}
+        <div className="absolute inset-0 overflow-hidden opacity-30">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-pink-200 mix-blend-multiply filter blur-3xl animate-float"></div>
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-blue-200 mix-blend-multiply filter blur-3xl animate-float-delay"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-60 h-60 rounded-full bg-yellow-200 mix-blend-multiply filter blur-3xl animate-float"></div>
         </div>
 
         <div className="container relative z-10 px-6 py-32 text-center">
@@ -33,10 +34,10 @@ useEffect(() => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
+            className="text-4xl md:text-6xl font-bold text-gray-800 mb-6 leading-tight"
           >
             Transform Leads Into<br />
-            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-pink-400 to-blue-500 bg-clip-text text-transparent">
               Paying Customers
             </span>
           </motion.h1>
@@ -45,7 +46,7 @@ useEffect(() => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-200 mb-10 max-w-2xl mx-auto"
+            className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto"
           >
             AI-powered chatbots and voice agents that never sleep. Capture, qualify, and convert leads 24/7.
           </motion.p>
@@ -60,7 +61,7 @@ useEffect(() => {
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
+                className="px-8 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
               >
                 Get Started <FiArrowRight />
               </motion.button>
@@ -69,7 +70,7 @@ useEffect(() => {
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-8 py-3 bg-white text-gray-900 rounded-lg font-medium shadow-lg hover:bg-gray-100 transition-all"
+                className="px-8 py-3 bg-white text-gray-800 rounded-lg font-medium shadow-lg hover:bg-gray-50 transition-all"
               >
                 Watch Demo
               </motion.button>
@@ -83,55 +84,85 @@ useEffect(() => {
           transition={{ repeat: Infinity, duration: 2 }}
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
         >
-          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
             <motion.div
               animate={{ y: [0, 5, 0] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
-              className="w-1 h-2 bg-white rounded-full mt-2"
+              className="w-1 h-2 bg-gray-500 rounded-full mt-2"
             ></motion.div>
           </div>
         </motion.div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
+      <section className="py-24 bg-gradient-to-b from-white to-green-50">
+        <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, staggerChildren: 0.1 }}
             viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
           >
             {[
-              { value: "24/7", label: "Availability", icon: <FiZap className="w-8 h-8 mx-auto mb-2 text-blue-600" /> },
-              { value: "70%", label: "More Leads Captured", icon: <FiMessageSquare className="w-8 h-8 mx-auto mb-2 text-purple-600" /> },
-              { value: "2.5x", label: "Conversion Boost", icon: <FiCheck className="w-8 h-8 mx-auto mb-2 text-green-600" /> },
-              { value: "45s", label: "Avg Response Time", icon: <FiPhone className="w-8 h-8 mx-auto mb-2 text-blue-400" /> }
+              { 
+                value: "24/7", 
+                label: "Availability", 
+                icon: <FiZap className="w-10 h-10 text-pink-500" />,
+                bg: "bg-pink-50"
+              },
+              { 
+                value: "70%", 
+                label: "More Leads Captured", 
+                icon: <FiMessageSquare className="w-10 h-10 text-blue-500" />,
+                bg: "bg-blue-50"
+              },
+              { 
+                value: "2.5x", 
+                label: "Conversion Boost", 
+                icon: <FiCheck className="w-10 h-10 text-green-500" />,
+                bg: "bg-green-50"
+              },
+              { 
+                value: "45s", 
+                label: "Avg Response Time", 
+                icon: <FiPhone className="w-10 h-10 text-yellow-500" />,
+                bg: "bg-yellow-50"
+              }
             ].map((stat, index) => (
-              <div key={stat.label} className="p-6">
-                {stat.icon}
-                <p className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+              <motion.div 
+                key={stat.label}
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className={`${stat.bg} p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-white`}
+              >
+                <div className="flex justify-center mb-6">
+                  <div className="p-4 rounded-full bg-white shadow-sm">
+                    {stat.icon}
+                  </div>
+                </div>
+                <p className="text-5xl font-extrabold text-gray-800 mb-3">
                   {stat.value}
                 </p>
-                <p className="text-gray-600">{stat.label}</p>
-              </div>
+                <p className="text-lg font-medium text-gray-600">{stat.label}</p>
+                <div className="mt-6 h-1.5 w-16 mx-auto bg-gradient-to-r from-pink-400 to-blue-400 rounded-full opacity-80"></div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
-      </section>
+      </section>  
 
       {/* How It Works Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gradient-to-b from-white to-pink-50">
         <div className="container mx-auto px-6">
           <motion.h2
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-center mb-16"
+            className="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800"
           >
-            How <span className="text-blue-600">Synova</span> Works
+            How <span className="text-blue-500">Synova</span> Works
           </motion.h2>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -140,19 +171,22 @@ useEffect(() => {
                 title: "Capture",
                 description: "Our AI engages visitors instantly across all channels",
                 features: ["Website chat", "Social media", "Email/SMS"],
-                icon: "🛒"
+                icon: "🛒",
+                color: "bg-blue-100"
               },
               {
                 title: "Qualify",
                 description: "Intelligent questioning identifies high-value leads",
                 features: ["Natural language processing", "Lead scoring", "CRM integration"],
-                icon: "🔍"
+                icon: "🔍",
+                color: "bg-green-100"
               },
               {
                 title: "Convert",
                 description: "Seamless handoff to your sales team with full context",
                 features: ["Automated follow-ups", "Meeting scheduling", "Real-time alerts"],
-                icon: "💸"
+                icon: "💸",
+                color: "bg-pink-100"
               }
             ].map((step, index) => (
               <motion.div
@@ -161,10 +195,10 @@ useEffect(() => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+                className={`bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow ${step.color}`}
               >
                 <div className="text-4xl mb-4">{step.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{step.title}</h3>
+                <h3 className="text-xl font-bold mb-2 text-gray-800">{step.title}</h3>
                 <p className="text-gray-600 mb-4">{step.description}</p>
                 <ul className="space-y-2">
                   {step.features.map(feature => (
@@ -180,189 +214,183 @@ useEffect(() => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 bg-white overflow-hidden">
-  <div className="container mx-auto px-6">
-    <motion.h2
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-      className="text-3xl md:text-4xl font-bold text-center mb-16"
-    >
-      Trusted by <span className="text-blue-600">Industry Leaders</span>
-    </motion.h2>
-
-    <div className="relative h-[300px] w-full overflow-x-visible py-4">
-      <motion.div
-        className="absolute cursor-pointer top-0 left-0 flex gap-8"
-        animate={controls}
-        onMouseEnter={() => controls.stop()}
-        onMouseLeave={() =>
-          controls.start({
-            x: ["0%", "-100%"],
-            transition: {
-              duration: 30,
-              ease: "linear",
-              repeat: Infinity,
-            },
-          })
-        }
-      >
-        {[
-          {
-            quote:
-              "Synova increased our lead conversion by 3x while reducing response time from hours to seconds.",
-            name: "Sarah Johnson",
-            title: "CMO, TechStart Inc.",
-            stars: 5,
-          },
-          {
-            quote:
-              "The AI voice agent handles 80% of our customer inquiries without human intervention.",
-            name: "Michael Chen",
-            title: "CEO, Global Solutions",
-            stars: 5,
-          },
-          {
-            quote:
-              "Best investment we've made in our sales pipeline. ROI was clear within the first month.",
-            name: "David Wilson",
-            title: "Sales Director, GrowthLabs",
-            stars: 5,
-          },
-          {
-            quote:
-              "Implementation was seamless and our sales team adopted it immediately.",
-            name: "Emily Rodriguez",
-            title: "VP Sales, NexTech",
-            stars: 4,
-          },
-          {
-            quote:
-              "The analytics dashboard gives us incredible insights into customer behavior.",
-            name: "James Peterson",
-            title: "Director of Marketing",
-            stars: 5,
-          },
-          // Duplicates
-          {
-            quote:
-              "Synova increased our lead conversion by 3x while reducing response time from hours to seconds.",
-            name: "Sarah Johnson",
-            title: "CMO, TechStart Inc.",
-            stars: 5,
-          },
-          {
-            quote:
-              "The AI voice agent handles 80% of our customer inquiries without human intervention.",
-            name: "Michael Chen",
-            title: "CEO, Global Solutions",
-            stars: 5,
-          },
-          {
-            quote:
-              "Best investment we've made in our sales pipeline. ROI was clear within the first month.",
-            name: "David Wilson",
-            title: "Sales Director, GrowthLabs",
-            stars: 5,
-          },
-        ].map((testimonial, index) => (
-          <motion.div
-            key={`${index}-${testimonial.name}`}
-            className="w-[350px] flex-shrink-0 bg-white p-8 rounded-xl border border-gray-200 hover:shadow-xl transition-all duration-300"
-            whileHover={{ scale: 1.05 }}
-          >
-            <div className="flex gap-1 mb-4">
-              {[...Array(testimonial.stars)].map((_, i) => (
-                <FiStar
-                  key={i}
-                  className="text-yellow-400 fill-current w-4 h-4"
-                />
-              ))}
-            </div>
-            <div className="text-gray-600 mb-6 italic">
-              "{testimonial.quote}"
-            </div>
-            <div className="border-t border-gray-200 pt-4">
-              <p className="font-medium text-gray-900">{testimonial.name}</p>
-              <p className="text-gray-600 text-sm">{testimonial.title}</p>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
-    </div>
-  </div>
-</section>
-
-      {/* Integration Partners */}
-      {/* <section className="py-20 bg-gray-50">
+      {/* Testimonials - Updated with Black Card Boundaries */}
+      <section className="py-20 bg-gradient-to-b from-white to-blue-50 overflow-hidden">
         <div className="container mx-auto px-6">
           <motion.h2
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-center mb-16"
+            className="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800"
           >
-            Seamless <span className="text-blue-600">Integrations</span>
+            Trusted by <span className="text-blue-500">Industry Leaders</span>
           </motion.h2>
-          
-          <div className="flex flex-wrap justify-center gap-12">
-            {["Salesforce", "HubSpot", "Zapier", "Slack", "Microsoft Teams", "Google Calendar"].map((partner, index) => (
-              <motion.div
-                key={partner}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white p-6 rounded-lg shadow-md flex items-center justify-center w-40 h-20"
-              >
-                <span className="font-medium text-gray-700">{partner}</span>
-              </motion.div>
-            ))}
+
+          <div className="relative h-[300px] w-full overflow-x-visible py-4">
+            <motion.div
+              className="absolute cursor-pointer top-0 left-0 flex gap-8"
+              animate={controls}
+              onMouseEnter={() => controls.stop()}
+              onMouseLeave={() =>
+                controls.start({
+                  x: ["0%", "-100%"],
+                  transition: {
+                    duration: 30,
+                    ease: "linear",
+                    repeat: Infinity,
+                  },
+                })
+              }
+            >
+              {[
+                {
+                  quote:
+                    "Synova increased our lead conversion by 3x while reducing response time from hours to seconds.",
+                  name: "Sarah Johnson",
+                  title: "CMO, TechStart Inc.",
+                  stars: 5,
+                  accent: "bg-pink-500"
+                },
+                {
+                  quote:
+                    "The AI voice agent handles 80% of our customer inquiries without human intervention.",
+                  name: "Michael Chen",
+                  title: "CEO, Global Solutions",
+                  stars: 5,
+                  accent: "bg-blue-500"
+                },
+                {
+                  quote:
+                    "Best investment we've made in our sales pipeline. ROI was clear within the first month.",
+                  name: "David Wilson",
+                  title: "Sales Director, GrowthLabs",
+                  stars: 5,
+                  accent: "bg-green-500"
+                },
+                {
+                  quote:
+                    "Implementation was seamless and our sales team adopted it immediately.",
+                  name: "Emily Rodriguez",
+                  title: "VP Sales, NexTech",
+                  stars: 4,
+                  accent: "bg-yellow-500"
+                },
+                {
+                  quote:
+                    "The analytics dashboard gives us incredible insights into customer behavior.",
+                  name: "James Peterson",
+                  title: "Director of Marketing",
+                  stars: 5,
+                  accent: "bg-purple-500"
+                },
+                // Duplicates
+                {
+                  quote:
+                    "Synova increased our lead conversion by 3x while reducing response time from hours to seconds.",
+                  name: "Sarah Johnson",
+                  title: "CMO, TechStart Inc.",
+                  stars: 5,
+                  accent: "bg-pink-500"
+                },
+                {
+                  quote:
+                    "The AI voice agent handles 80% of our customer inquiries without human intervention.",
+                  name: "Michael Chen",
+                  title: "CEO, Global Solutions",
+                  stars: 5,
+                  accent: "bg-blue-500"
+                },
+                {
+                  quote:
+                    "Best investment we've made in our sales pipeline. ROI was clear within the first month.",
+                  name: "David Wilson",
+                  title: "Sales Director, GrowthLabs",
+                  stars: 5,
+                  accent: "bg-green-500"
+                },
+              ].map((testimonial, index) => (
+                <motion.div
+                  key={`${index}-${testimonial.name}`}
+                  className="w-[350px] flex-shrink-0 bg-white p-8 rounded-xl border-2 border-black shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  {/* Accent Border Top */}
+                  <div className={`absolute top-0 left-0 w-full h-1 ${testimonial.accent}`}></div>
+                  
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(testimonial.stars)].map((_, i) => (
+                      <FiStar
+                        key={i}
+                        className="text-yellow-400 fill-current w-4 h-4"
+                      />
+                    ))}
+                  </div>
+                  <div className="text-gray-600 mb-6 italic">
+                    "{testimonial.quote}"
+                  </div>
+                  <div className="border-t border-gray-200 pt-4">
+                    <p className="font-medium text-gray-800">{testimonial.name}</p>
+                    <p className="text-gray-600 text-sm">{testimonial.title}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </div>
-      </section> */}
-
-      {/* Final CTA */}
-      <section className="py-20 bg-gray-900">
-  <div className="container mx-auto px-6 text-center">
-    <motion.h2
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-      className="text-3xl md:text-4xl font-bold text-white mb-6"
-    >
-      Ready to Transform Your Business?
-    </motion.h2>
-    <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
-      Join thousands of businesses boosting conversions with our AI solutions.
-    </p>
-    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-      <Link to="/pricing">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-          className="px-8 py-3 bg-white text-black rounded-lg font-medium shadow-lg hover:shadow-xl hover:bg-gray-100 transition-all"
-        >
-          Get Started Today
-        </motion.button>
-      </Link>
-      <Link to="/contact">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-          className="px-8 py-3 border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transition-all"
-        >
-          Talk to Sales
-        </motion.button>
-      </Link>
-    </div>
-  </div>
       </section>
 
+      {/* Final CTA */}
+      <section className="py-20 bg-gradient-to-br from-pink-100 via-blue-100 to-green-100">
+        <div className="container mx-auto px-6 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold text-gray-800 mb-6"
+          >
+            Ready to Transform Your Business?
+          </motion.h2>
+          <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+            Join thousands of businesses boosting conversions with our AI solutions.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/pricing">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-8 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all"
+              >
+                Get Started Today
+              </motion.button>
+            </Link>
+            <Link to="/contact">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-8 py-3 bg-white text-gray-800 rounded-lg font-medium shadow-lg hover:bg-gray-50 transition-all"
+              >
+                Talk to Sales
+              </motion.button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Floating animation CSS */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(3deg); }
+        }
+        .animate-float {
+          animation: float 8s ease-in-out infinite;
+        }
+        .animate-float-delay {
+          animation: float 10s ease-in-out infinite 2s;
+        }
+      `}</style>
     </main>
   );
 }

@@ -241,7 +241,7 @@ export default function Contact() {
                   <div>
                     <h3 className="font-medium text-gray-900">Phone</h3>
                     <a href="tel:+919876543210" className="text-gray-600 hover:text-blue-600 transition-colors">
-                      +91 93893 53108
+                      +91 92893 53108
                     </a>
                     <p className="text-sm text-gray-500 mt-1">Mon-Fri, 9AM-6PM IST</p>
                   </div>
@@ -298,7 +298,7 @@ export default function Contact() {
             Need Immediate Assistance?
           </h2>
           <p className="text-xl text-blue-100 mb-8">
-            Call us directly at +91 93893 53108 for urgent inquiries.
+            Call us directly at +91 92893 53108 for urgent inquiries.
           </p>
           <a 
             href="tel:+919876543210"
