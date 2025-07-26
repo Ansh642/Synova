@@ -7,7 +7,7 @@ export default function DemoPage() {
   const videoUrl = "https://drive.google.com/file/d/1qrkZZJHIMc-z6OfsA3dhIkaFUv1ZAumb/preview";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-white">
       {/* Navigation */}
       <nav className="py-6 px-6 max-w-7xl mx-auto">
         <Link to="/" className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors group">
@@ -24,12 +24,18 @@ export default function DemoPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-12 px-6 max-w-7xl mx-auto">
+      <section className="relative pt-20 pb-16 px-6 text-center bg-gradient-to-br from-pink-50 via-yellow-50 to-blue-50">
+        {/* Floating bubbles */}
+        <div className="absolute inset-0 overflow-hidden opacity-20">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-pink-200 mix-blend-multiply filter blur-3xl animate-float"></div>
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-blue-200 mix-blend-multiply filter blur-3xl animate-float-delay"></div>
+        </div>
+        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-16 relative z-10"
         >
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-medium mb-4 shadow-sm">
             <FiPlay className="text-blue-500" />
@@ -42,15 +48,17 @@ export default function DemoPage() {
             See how our AI solution transforms customer interactions in real-time.
           </p>
         </motion.div>
+      </section>
 
-        {/* Video Player Section */}
+      {/* Video Player Section */}
+      <section className="py-16 px-6 max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-20"
         >
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
             <div className="relative aspect-w-16 aspect-h-9 w-full">
               <iframe
                 src={videoUrl}
@@ -63,7 +71,7 @@ export default function DemoPage() {
               <div className="absolute inset-0 pointer-events-none border-8 border-white/10 rounded-xl"></div>
             </div>
 
-            <div className="p-6 md:p-8 border-t border-gray-100">
+            <div className="p-6 md:p-8 border-t border-gray-200">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">Synova AI Platform Demo</h2>
@@ -152,7 +160,7 @@ export default function DemoPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white p-8 rounded-xl border border-gray-100 hover:shadow-lg transition-all"
+                className="bg-white p-8 rounded-xl border border-gray-200 hover:shadow-lg transition-all"
               >
                 {feature.icon}
                 <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">{feature.title}</h3>
@@ -169,40 +177,47 @@ export default function DemoPage() {
             ))}
           </div>
         </div>
-
-        {/* CTA Section */}
       </section>
 
-        <section className="py-16 bg-gray-900 max-w-full  overflow-hidden relative">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 left-0 w-40 h-40 bg-blue-400 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 right-0 w-60 h-60 bg-purple-400 rounded-full blur-3xl"></div>
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-br from-pink-100 via-blue-100 to-green-100 text-center">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+            Ready to See Synova in Action?
+          </h2>
+          <p className="text-xl text-gray-600 mb-8">
+            Get a personalized demo tailored to your business needs.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all"
+            >
+              Request Demo
+            </Link>
+            <Link
+              to="/pricing"
+              className="inline-flex items-center gap-2 px-8 py-3.5 border-2 border-gray-800 text-gray-800 rounded-lg font-medium hover:bg-white/50 transition-all"
+            >
+              View Pricing
+            </Link>
           </div>
-          
-          <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Ready to See Synova in Action?
-            </h2>
-            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Get a personalized demo tailored to your business needs.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/contact"
-                className="px-8 py-3.5 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
-              >
-                Request Demo
-              </Link>
-              <Link
-                to="/pricing"
-                className="px-8 py-3.5 border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transition-all"
-              >
-                View Pricing
-              </Link>
-            </div>
-          </div>
-        </section>
+        </div>
+      </section>
 
+      {/* Floating animation CSS */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(3deg); }
+        }
+        .animate-float {
+          animation: float 8s ease-in-out infinite;
+        }
+        .animate-float-delay {
+          animation: float 10s ease-in-out infinite 2s;
+        }
+      `}</style>
     </div>
   );
 }
