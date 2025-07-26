@@ -3,7 +3,6 @@ import { FiArrowRight, FiCheckCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 export default function UseCases() {
-
   const navigate = useNavigate();
 
   const industries = [
@@ -17,7 +16,8 @@ export default function UseCases() {
         "↓ 80% response time",
         "✓ Qualifies buyers automatically"
       ],
-      cta: "See real estate solution"
+      cta: "See real estate solution",
+      color: "bg-pink-100"
     },
     {
       title: "Fitness Studios",
@@ -29,7 +29,8 @@ export default function UseCases() {
         "↓ 50% admin workload",
         "✓ 24/7 member support"
       ],
-      cta: "Explore fitness automation"
+      cta: "Explore fitness automation",
+      color: "bg-blue-100"
     },
     {
       title: "Education",
@@ -41,30 +42,36 @@ export default function UseCases() {
         "↓ 90% inquiry response time",
         "✓ Multilingual support"
       ],
-      cta: "View education package"
+      cta: "View education package",
+      color: "bg-purple-100"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      
+    <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6 text-center bg-gradient-to-br from-blue-50 to-purple-50">
+      <section className="pt-32 pb-20 px-6 text-center bg-gradient-to-br from-pink-50 via-yellow-50 to-blue-50 relative">
+        {/* Floating bubbles */}
+        <div className="absolute inset-0 overflow-hidden opacity-20">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-pink-200 mix-blend-multiply filter blur-3xl animate-float"></div>
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-blue-200 mix-blend-multiply filter blur-3xl animate-float-delay"></div>
+        </div>
+        
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+          className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 relative z-10"
         >
-          Industry-Tailored <span className="text-blue-600">AI Solutions</span>
+          Industry-Tailored <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500">AI Solutions</span>
         </motion.h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto relative z-10">
           See how Synova transforms lead management in your sector.
         </p>
       </section>
 
       {/* Industry Grid */}
       <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-3 gap-12">
+        <div className="grid md:grid-cols-3 gap-8">
           {industries.map((industry, index) => (
             <motion.div
               key={industry.title}
@@ -72,15 +79,15 @@ export default function UseCases() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-200"
             >
               <img 
                 src={industry.image} 
                 alt={industry.title}
                 className="w-full h-48 object-cover"
               />
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <div className={`p-8 ${industry.color} bg-opacity-30`}>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">
                   {industry.title}
                 </h3>
                 
@@ -111,10 +118,14 @@ export default function UseCases() {
                 </ul>
 
                 {/* CTA */}
-                <button className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all"
+                >
                   {industry.cta}
                   <FiArrowRight />
-                </button>
+                </motion.button>
               </div>
             </motion.div>
           ))}
@@ -122,20 +133,38 @@ export default function UseCases() {
       </section>
 
       {/* Unified CTA */}
-      <section className="py-20 bg-gray-900 text-center">
+      <section className="py-20 bg-gradient-to-br from-pink-100 via-blue-100 to-green-100 text-center">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
             Don't See Your Industry?
           </h2>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-xl text-gray-600 mb-8">
             Our AI adapts to any business. Book a custom demo.
           </p>
-          <button onClick={()=>navigate('/contact')} className="px-8 py-3 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => navigate('/contact')}
+            className="px-8 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all"
+          >
             Request Custom Solution
-          </button>
+          </motion.button>
         </div>
       </section>
 
+      {/* Floating animation CSS */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(3deg); }
+        }
+        .animate-float {
+          animation: float 8s ease-in-out infinite;
+        }
+        .animate-float-delay {
+          animation: float 10s ease-in-out infinite 2s;
+        }
+      `}</style>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { FiMail, FiPhone, FiMapPin, FiClock, FiSend } from "react-icons/fi";
+import { FiMail, FiPhone, FiMapPin, FiClock, FiSend, FiArrowRight } from "react-icons/fi";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -46,7 +46,6 @@ export default function Contact() {
     setIsSubmitting(true);
     
     try {
-      // Send email using FormSubmit or your preferred method
       const response = await fetch("https://formsubmit.co/ajax/sarthak4556@gmail.com", {
         method: "POST",
         headers: { 
@@ -80,16 +79,22 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="relative pt-32 pb-20 px-6 text-center bg-gradient-to-br from-blue-50 to-purple-50">
+      <section className="relative pt-32 pb-20 px-6 text-center bg-gradient-to-br from-pink-50 via-yellow-50 to-blue-50">
+        {/* Floating bubbles */}
+        <div className="absolute inset-0 overflow-hidden opacity-20">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-pink-200 mix-blend-multiply filter blur-3xl animate-float"></div>
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-blue-200 mix-blend-multiply filter blur-3xl animate-float-delay"></div>
+        </div>
+        
         <div className="max-w-4xl mx-auto relative z-10">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            className="text-4xl md:text-5xl font-bold text-gray-800 mb-4"
           >
-            Let's Build Something <span className="text-blue-600">Together</span>
+            Let's Build Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500">Together</span>
           </motion.h1>
           <p className="text-xl text-gray-600">
             Our team typically responds within 2 business hours.
@@ -107,7 +112,7 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
             className="bg-white rounded-xl shadow-lg p-8 border border-gray-200"
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Send Us a Message</h2>
             
             {submitSuccess ? (
               <div className="p-6 bg-green-50 rounded-lg text-green-700 mb-6 border border-green-200">
@@ -187,10 +192,12 @@ export default function Contact() {
                   {errors.message && <p className="mt-2 text-sm text-red-600">{errors.message}</p>}
                 </div>
 
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-70"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all disabled:opacity-70"
                 >
                   {isSubmitting ? (
                     <>
@@ -206,7 +213,7 @@ export default function Contact() {
                       <FiSend />
                     </>
                   )}
-                </button>
+                </motion.button>
               </form>
             )}
           </motion.div>
@@ -219,15 +226,15 @@ export default function Contact() {
             className="space-y-8"
           >
             <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">Contact Information</h2>
               
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 text-blue-600">
+                  <div className="mt-1 text-pink-500">
                     <FiMail className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900">Email</h3>
+                    <h3 className="font-medium text-gray-800">Email</h3>
                     <a href="mailto:sarthak4556@gmail.com" className="text-gray-600 hover:text-blue-600 transition-colors">
                       sarthak4556@gmail.com
                     </a>
@@ -235,11 +242,11 @@ export default function Contact() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 text-blue-600">
+                  <div className="mt-1 text-blue-500">
                     <FiPhone className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900">Phone</h3>
+                    <h3 className="font-medium text-gray-800">Phone</h3>
                     <a href="tel:+919876543210" className="text-gray-600 hover:text-blue-600 transition-colors">
                       +91 92893 53108
                     </a>
@@ -248,11 +255,11 @@ export default function Contact() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 text-blue-600">
+                  <div className="mt-1 text-purple-500">
                     <FiMapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900">Office Location</h3>
+                    <h3 className="font-medium text-gray-800">Office Location</h3>
                     <p className="text-gray-600">
                       Sector 62, Noida<br />
                       Uttar Pradesh, India - 201301
@@ -261,11 +268,11 @@ export default function Contact() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 text-blue-600">
+                  <div className="mt-1 text-yellow-500">
                     <FiClock className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900">Working Hours</h3>
+                    <h3 className="font-medium text-gray-800">Working Hours</h3>
                     <p className="text-gray-600">
                       <span className="font-medium">Monday-Friday:</span> 9:00 AM - 6:00 PM IST<br />
                       <span className="font-medium">Weekends:</span> Closed
@@ -292,22 +299,38 @@ export default function Contact() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gray-900 text-center">
+      <section className="py-20 bg-gradient-to-br from-pink-100 via-blue-100 to-green-100 text-center">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
             Need Immediate Assistance?
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl text-gray-600 mb-8">
             Call us directly at +91 92893 53108 for urgent inquiries.
           </p>
-          <a 
+          <motion.a 
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
             href="tel:+919876543210"
-            className="inline-block px-8 py-3 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all"
           >
-            Call Now
-          </a>
+            Call Now <FiArrowRight />
+          </motion.a>
         </div>
       </section>
+
+      {/* Floating animation CSS */}
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(3deg); }
+        }
+        .animate-float {
+          animation: float 8s ease-in-out infinite;
+        }
+        .animate-float-delay {
+          animation: float 10s ease-in-out infinite 2s;
+        }
+      `}</style>
     </div>
   );
 }
