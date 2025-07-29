@@ -1,10 +1,26 @@
 import { motion } from "framer-motion";
 import { FiArrowLeft, FiPlay, FiDownload, FiCheck } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function DemoPage() {
-  // Updated video embed URL (using Google Drive embed format)
-  const videoUrl = "https://drive.google.com/file/d/1qrkZZJHIMc-z6OfsA3dhIkaFUv1ZAumb/preview";
+  const [activeVideo, setActiveVideo] = useState("product"); // 'product' or 'mmt'
+  
+  // Video URLs
+  const videos = {
+    product: {
+      url: "https://drive.google.com/file/d/1qrkZZJHIMc-z6OfsA3dhIkaFUv1ZAumb/preview",
+      download: "https://drive.google.com/uc?export=download&id=1qrkZZJHIMc-z6OfsA3dhIkaFUv1ZAumb",
+      title: "Synova AI Platform Demo",
+      description: "Watch our comprehensive product walkthrough"
+    },
+    mmt: {
+      url: "https://drive.google.com/file/d/1OobHvPRJH6xETEbSz3iRq2XRG7ge3_DO/preview",
+      download: "https://drive.google.com/uc?export=download&id=1OobHvPRJH6xETEbSz3iRq2XRG7ge3_DO",
+      title: "MMT Agent Demo",
+      description: "See our AI agent in action for MMT use cases"
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -39,7 +55,7 @@ export default function DemoPage() {
         >
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-medium mb-4 shadow-sm">
             <FiPlay className="text-blue-500" />
-            <span>Product Demo</span>
+            <span>Product Demos</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
             Experience the <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Power of Synova</span>
@@ -50,23 +66,42 @@ export default function DemoPage() {
         </motion.div>
       </section>
 
+      {/* Video Selector */}
+      <div className="flex justify-center mb-8 mt-12">
+        <div className="inline-flex bg-white rounded-full p-1 shadow-md border border-gray-200">
+          <button
+            onClick={() => setActiveVideo("product")}
+            className={`px-6 py-2 rounded-full font-medium transition-all ${activeVideo === "product" ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white" : "text-gray-600 hover:bg-gray-100"}`}
+          >
+            Product Demo
+          </button>
+          <button
+            onClick={() => setActiveVideo("mmt")}
+            className={`px-6 py-2 rounded-full font-medium transition-all ${activeVideo === "mmt" ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white" : "text-gray-600 hover:bg-gray-100"}`}
+          >
+            MMT Agent
+          </button>
+        </div>
+      </div>
+
       {/* Video Player Section */}
-      <section className="py-16 px-6 max-w-7xl mx-auto">
+      <section className="py-8 px-6 max-w-7xl mx-auto">
         <motion.div
+          key={activeVideo}
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6 }}
           className="mb-20"
         >
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
             <div className="relative aspect-w-16 aspect-h-9 w-full">
               <iframe
-                src={videoUrl}
+                src={videos[activeVideo].url}
                 className="w-full h-[500px]"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                title="Synova Demo Video"
+                title={`Synova ${activeVideo === "product" ? "Product" : "MMT Agent"} Demo`}
               ></iframe>
               <div className="absolute inset-0 pointer-events-none border-8 border-white/10 rounded-xl"></div>
             </div>
@@ -74,12 +109,12 @@ export default function DemoPage() {
             <div className="p-6 md:p-8 border-t border-gray-200">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Synova AI Platform Demo</h2>
-                  <p className="text-gray-500 mt-1">Watch our comprehensive product walkthrough</p>
+                  <h2 className="text-2xl font-bold text-gray-900">{videos[activeVideo].title}</h2>
+                  <p className="text-gray-500 mt-1">{videos[activeVideo].description}</p>
                 </div>
                 <div className="flex gap-3">
                   <a
-                    href={videoUrl.replace('/preview', '/view')}
+                    href={videos[activeVideo].url.replace('/preview', '/view')}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-medium hover:shadow-lg transition-all flex items-center gap-2"
@@ -87,7 +122,7 @@ export default function DemoPage() {
                     <FiPlay className="w-4 h-4" /> Fullscreen
                   </a>
                   <a
-                    href={`https://drive.google.com/uc?export=download&id=1qrkZZJHIMc-z6OfsA3dhIkaFUv1ZAumb`}
+                    href={videos[activeVideo].download}
                     className="px-5 py-2.5 border border-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-all flex items-center gap-2"
                   >
                     <FiDownload className="w-4 h-4" /> Download

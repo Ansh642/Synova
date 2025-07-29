@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { FiAward, FiUsers, FiGlobe, FiArrowRight } from "react-icons/fi";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import image1 from "../assets/sarthak.jpeg";
 
 export default function About() {
   const founders = [
@@ -9,14 +8,14 @@ export default function About() {
       name: "Guneetpal Singh",
       role: "Co-Founder & CEO",
       bio: "AI expert with 10+ years in conversational interfaces. Former lead at Google Dialogflow.",
-      image: "founder-1.webp",
+      image: "",
       color: "bg-pink-100"
     },
     {
       name: "Sarthak Jain",
       role: "Co-Founder & CTO",
       bio: "Scaling specialist who built infrastructure for 3 unicorn startups.",
-      image: "founder-2.webp",
+      image: `${image1}`,
       color: "bg-blue-100"
     }
   ];
@@ -87,7 +86,7 @@ export default function About() {
               <div className="flex flex-col md:flex-row gap-8 items-center">
                 <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-lg">
                   <img 
-                    src={`/src/assets/images/${founder.image}`} 
+                    src={`${founder.image}`} 
                     alt={founder.name}
                     className="w-full h-full object-cover"
                   />
