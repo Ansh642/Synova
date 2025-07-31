@@ -1,8 +1,10 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FiCheck, FiArrowRight, FiStar, FiZap, FiMessageSquare, FiPhone } from "react-icons/fi";
-import { useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import { useAnimation, useInView } from "framer-motion";
+import { useEffect, useRef } from "react";
+import FloatingShapes from '../components/FloatingShapes';
+import FloatingImages from '../components/FloatingImages';
 
 export default function Home() {
   const controls = useAnimation();
@@ -22,6 +24,16 @@ export default function Home() {
     <main className="bg-white">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-pink-50 via-yellow-50 to-blue-50">
+        {/* 3D Background Shapes */}
+        <div className="absolute inset-0 opacity-10 z-0">
+          <FloatingShapes />
+        </div>
+        
+        {/* Floating Emoji Icons */}
+        <div className="absolute inset-0 z-10">
+          <FloatingImages />
+        </div>
+        
         {/* Color effect bubbles */}
         <div className="absolute inset-0 overflow-hidden opacity-30">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-pink-200 mix-blend-multiply filter blur-3xl animate-float"></div>
@@ -34,7 +46,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl font-bold text-gray-800 mb-6 leading-tight"
+            className="text-4xl md:text-6xl font-bold text-gray-800 mb-6 leading-tight relative z-10"
           >
             Transform Leads Into<br />
             <span className="bg-gradient-to-r from-pink-400 to-blue-500 bg-clip-text text-transparent">
@@ -46,7 +58,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto"
+            className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto relative z-10"
           >
             AI-powered chatbots and voice agents that never sleep. Capture, qualify, and convert leads 24/7.
           </motion.p>
@@ -55,26 +67,45 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-wrap justify-center gap-4"
           >
-            <Link to="/pricing">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                className="px-8 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
-              >
-                Get Started <FiArrowRight />
-              </motion.button>
-            </Link>
-            <Link to="/demo">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                className="px-8 py-3 bg-white text-gray-800 rounded-lg font-medium shadow-lg hover:bg-gray-50 transition-all"
-              >
-                Watch Demo
-              </motion.button>
-            </Link>
+            <motion.div className="inline-flex">
+              <Link to="/pricing">
+                <motion.button
+                  initial={{ background: 'linear-gradient(to right, #4f46e5, #7c3aed)' }}
+                  whileHover={{
+                    background: [
+                      'linear-gradient(to right, #4f46e5, #7c3aed)',
+                      'linear-gradient(to right, #7c3aed, #4f46e5)'
+                    ],
+                    scale: 1.05
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{
+                    duration: 0.3,
+                    background: { duration: 3, repeat: Infinity, repeatType: 'reverse' },
+                    scale: { type: 'spring', stiffness: 300 }
+                  }}
+                  className="inline-flex items-center px-6 py-3 text-white rounded-lg font-medium text-base shadow-md hover:shadow-lg relative z-10 overflow-hidden"
+                >
+                  Get Started <FiArrowRight className="ml-2" />
+                </motion.button>
+              </Link>
+            </motion.div>
+            <motion.div className="inline-flex">
+              <Link to="/demo">
+                <motion.button
+                  whileHover={{ 
+                    scale: 1.05,
+                    backgroundColor: '#f9fafb'
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  className="inline-flex items-center px-6 py-3 bg-white text-gray-800 rounded-lg font-medium text-base shadow-md hover:shadow-lg transition-all"
+                >
+                  Watch Demo
+                </motion.button>
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
 
@@ -94,8 +125,38 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-24 bg-gradient-to-b from-white to-green-50">
+      {/* Animated Divider */}
+      <div className="relative h-24 bg-gradient-to-b from-transparent via-white/80 to-white -mt-24">
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
+      </div>
+
+      {/* Features Section */}
+      <section className="py-20 bg-white relative overflow-hidden">
+        <motion.div 
+          className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400/10 rounded-full filter blur-3xl"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.1, 0.2, 0.1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            repeatType: 'reverse',
+          }}
+        />
+        <motion.div 
+          className="absolute -bottom-20 -left-20 w-96 h-96 bg-purple-400/10 rounded-full filter blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.1, 0.15, 0.1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            repeatType: 'reverse',
+            delay: 1
+          }}
+        />
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -165,7 +226,7 @@ export default function Home() {
             How <span className="text-blue-500">Synova</span> Works
           </motion.h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 mt-16 relative z-10">
             {[
               {
                 title: "Capture",
@@ -195,7 +256,17 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                className={`bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow ${step.color}`}
+                className="w-full h-full bg-white rounded-2xl p-8 shadow-xl flex flex-col items-center text-center"
+                whileHover={{
+                  y: -10,
+                  boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 300,
+                  duration: 0.3,
+                  boxShadow: { duration: 0.3 }
+                }}
               >
                 <div className="text-4xl mb-4">{step.icon}</div>
                 <h3 className="text-xl font-bold mb-2 text-gray-800">{step.title}</h3>
