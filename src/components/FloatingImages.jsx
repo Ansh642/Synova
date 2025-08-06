@@ -14,7 +14,6 @@ const FloatingImages = () => {
     }
   }, []);
 
-  // Image data - using simple emoji as fallback
   const images = [
     { emoji: '🤖', top: '15%', left: '10%', size: '30px', color: 'text-blue-500' },
     { emoji: '🧠', top: '25%', left: '85%', size: '28px', color: 'text-purple-500' },

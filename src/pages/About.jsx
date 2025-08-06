@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FiAward, FiUsers, FiGlobe, FiArrowRight } from "react-icons/fi";
 import image1 from "../assets/sarthak.jpeg";
+import image2 from "../assets/co-founder.jpeg";
 
 export default function About() {
   const founders = [
@@ -8,7 +9,7 @@ export default function About() {
       name: "Guneetpal Singh",
       role: "Co-Founder & CEO",
       bio: "AI expert with 10+ years in conversational interfaces. Former lead at Google Dialogflow.",
-      image: "",
+      image: `${image2}`,
       color: "bg-pink-100"
     },
     {
